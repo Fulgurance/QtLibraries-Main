@@ -38,8 +38,10 @@ class Target < ISM::Software
     def prepareInstallation
         super
 
-        makeSource( arguments:  "INSTALL_ROOT=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
+        makeSource( arguments:  "install",
                     path:       buildDirectoryPath)
+
+        exit 1
     end
 
     def install

@@ -8,14 +8,16 @@ class Target < ISM::Software
     def configure
         super
 
-        runCmakeCommand(arguments:      "-DCMAKE_INSTALL_PREFIX=/usr                                        \
-                                        -DINSTALL_ARCHDATADIR=/usr/lib/qt#{majorVersion}                    \
-                                        -DINSTALL_BINDIR=/usr/bin/qt#{majorVersion}                         \
-                                        -DINSTALL_PLUGINSDIR=/usr/lib/qt#{majorVersion}/plugin              \
-                                        -DINSTALL_INCLUDEDIR=/usr/include/qt#{majorVersion}                 \
-                                        -DINSTALL_DATADIR=/usr/share/qt#{majorVersion}                      \
-                                        -DINSTALL_DOCDIR=/usr/share/doc/qt#{majorVersion}                   \
-                                        -DINSTALL_TRANSLATIONSDIR=/usr/share/qt#{majorVersion}/translations \
+        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"
+
+        runCmakeCommand(arguments:      "-DCMAKE_INSTALL_PREFIX=#{prefix}                                        \
+                                        -DINSTALL_ARCHDATADIR=#{prefix}/lib/qt#{majorVersion}                    \
+                                        -DINSTALL_BINDIR=#{prefix}/bin/qt#{majorVersion}                         \
+                                        -DINSTALL_PLUGINSDIR=#{prefix}/lib/qt#{majorVersion}/plugin              \
+                                        -DINSTALL_INCLUDEDIR=#{prefix}/include/qt#{majorVersion}                 \
+                                        -DINSTALL_DATADIR=#{prefix}/share/qt#{majorVersion}                      \
+                                        -DINSTALL_DOCDIR=#{prefix}/share/doc/qt#{majorVersion}                   \
+                                        -DINSTALL_TRANSLATIONSDIR=#{prefix}/share/qt#{majorVersion}/translations \
                                         -DINSTALL_SYSCONFDIR=/etc/xdg                                       \
                                         -DQT_UNITY_BUILD=ON                                                 \
                                         -DQT_FEATURE_relocatable=OFF                                        \
@@ -49,8 +51,10 @@ class Target < ISM::Software
     def prepareInstallation
         super
 
-        makeSource( arguments:  "INSTALL_ROOT=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
+        makeSource( arguments:  "install",
                     path:       buildDirectoryPath)
+
+        exit 1
     end
 
     def install
