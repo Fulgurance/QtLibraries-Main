@@ -3,7 +3,7 @@ class Target < ISM::Software
     def configure
         super
 
-        configureSource(arguments:  "--prefix=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr  \
+        configureSource(arguments:  "--prefix=/usr                                              \
                                     --archdatadir=/usr/lib/qt#{majorVersion}                    \
                                     --bindir=/usr/bin/qt#{majorVersion}                         \
                                     --plugindir=/usr/lib/qt#{majorVersion}/plugins              \
@@ -36,7 +36,7 @@ class Target < ISM::Software
     def prepareInstallation
         super
 
-        makeSource( arguments:  "install",
+        makeSource( arguments:  "INSTALL_ROOT=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
                     path:       buildDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
