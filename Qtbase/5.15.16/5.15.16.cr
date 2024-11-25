@@ -44,6 +44,13 @@ class Target < ISM::Software
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/etc/profile.d")
 
+        if File.exists?("#{Ism.settings.rootPath}etc/profile.d/qt.sh")
+            copyFile(   "/etc/profile.d/qt.sh",
+                        "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}etc/profile.d/qt.sh")
+        else
+            generateEmptyFile("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}etc/profile.d/qt.sh")
+        end
+
         qtData = <<-CODE
         QT#{majorVersion}DIR=/usr
         export QT#{majorVersion}DIR
