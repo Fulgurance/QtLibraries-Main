@@ -71,8 +71,6 @@ class Target < ISM::Software
 
             end
         end
-
-        exit 1
     end
 
     def install
