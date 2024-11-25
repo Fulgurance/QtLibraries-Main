@@ -34,8 +34,9 @@ class Target < ISM::Software
                                         -DFEATURE_system_sqlite=#{option("Sqlite") ? "ON" : "OFF"}          \
                                         -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
-                                        -DFEATURE_system_zlib=ON
-                                        -DFEATURE_system_pcre2=ON",
+                                        -DFEATURE_system_zlib=ON                                            \
+                                        -DFEATURE_system_pcre2=ON                                           \
+                                        ..",
                         path:           buildDirectoryPath)
     end
 
