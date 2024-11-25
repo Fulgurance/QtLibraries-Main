@@ -8,7 +8,7 @@ class Target < ISM::Software
     def configure
         super
 
-        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"
+        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr"
 
         runCmakeCommand(arguments:      "-DCMAKE_INSTALL_PREFIX=#{prefix}                                        \
                                         -DINSTALL_ARCHDATADIR=#{prefix}/lib/qt#{majorVersion}                    \

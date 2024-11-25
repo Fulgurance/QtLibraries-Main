@@ -3,7 +3,7 @@ class Target < ISM::Software
     def configure
         super
 
-        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"
+        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr"
 
         configureSource(arguments:  "--prefix=#{prefix}                                              \
                                     --archdatadir=#{prefix}/lib/qt#{majorVersion}                    \
