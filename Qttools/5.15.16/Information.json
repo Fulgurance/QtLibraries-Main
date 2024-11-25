@@ -1,16 +1,16 @@
 {
   "port": "QtLibraries-Main",
-  "name": "Qtsvg",
-  "version": "6.7.3",
+  "name": "Qttools",
+  "version": "5.15.16",
   "architectures": ["x86_64"],
-  "description": "SVG rendering library for the Qt framework",
-  "website": "https://invent.kde.org/qt/qt/qtsvg",
+  "description": "Qt Tools Collection",
+  "website": "https://invent.kde.org/qt/qt/qttools",
   "installedFiles": [],
   "dependencies": [
     {
       "port": "QtLibraries-Main",
       "name": "Qtbase",
-      "version": ">=6.0.0 ~ <7.0.0",
+      "version": ">=5.0.0 ~ <6.0.0",
       "options": []
     }
   ],
