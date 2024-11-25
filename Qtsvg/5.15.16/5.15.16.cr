@@ -8,7 +8,12 @@ class Target < ISM::Software
     def configure
         super
 
-        runQmakeCommand(arguments:  "..",
+        runQmakeCommand(arguments:  "-set QT_INSTALL_PREFIX /usr                            \
+                                    -set QT_INSTALL_ARCHDATA /usr/lib64/qt#{majorVersion}   \
+                                    -set QT_INSTALL_DATA /usr/share/qt#{majorVersion}       \
+                                    -set QT_INSTALL_DOCS /usr/share/doc/qt#{majorVersion}   \
+                                    -set QT_INSTALL_HEADERS /usr/include/qt#{majorVersion}  \
+                                    ..",
                         path:       buildDirectoryPath)
     end
     
@@ -21,7 +26,7 @@ class Target < ISM::Software
     def prepareInstallation
         super
 
-        makeSource( arguments:  "INSTALL_ROOT=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
+        makeSource( arguments:  "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
                     path:       buildDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
