@@ -3,15 +3,17 @@ class Target < ISM::Software
     def configure
         super
 
-        configureSource(arguments:  "--prefix=/usr                                              \
-                                    --archdatadir=/usr/lib/qt#{majorVersion}                    \
-                                    --bindir=/usr/bin/qt#{majorVersion}                         \
-                                    --plugindir=/usr/lib/qt#{majorVersion}/plugins              \
-                                    --importdir=/usr/lib/qt#{majorVersion}/imports              \
-                                    --headerdir=/usr/include/qt#{majorVersion}                  \
-                                    --datadir=/usr/share/qt#{majorVersion}                      \
-                                    --docdir=/usr/share/doc/qt#{majorVersion}                   \
-                                    --translationdir=/usr/share/qt#{majorVersion}/translations  \
+        prefix = "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"
+
+        configureSource(arguments:  "--prefix=#{prefix}                                              \
+                                    --archdatadir=#{prefix}/lib/qt#{majorVersion}                    \
+                                    --bindir=#{prefix}/bin/qt#{majorVersion}                         \
+                                    --plugindir=#{prefix}/lib/qt#{majorVersion}/plugins              \
+                                    --importdir=#{prefix}/lib/qt#{majorVersion}/imports              \
+                                    --headerdir=#{prefix}/include/qt#{majorVersion}                  \
+                                    --datadir=#{prefix}/share/qt#{majorVersion}                      \
+                                    --docdir=#{prefix}/share/doc/qt#{majorVersion}                   \
+                                    --translationdir=#{prefix}/share/qt#{majorVersion}/translations  \
                                     --sysconfdir=/etc/xdg                           \
                                     --confirm-license                               \
                                     --opensource                                    \
