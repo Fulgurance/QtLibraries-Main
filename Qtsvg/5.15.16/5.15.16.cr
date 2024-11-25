@@ -10,7 +10,7 @@ class Target < ISM::Software
 
         runQmakeCommand(arguments:  "..",
                         path:       buildDirectoryPath,
-                        environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"}))
+                        environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"})
     end
     
     def build
