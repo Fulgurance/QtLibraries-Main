@@ -55,6 +55,18 @@ class Target < ISM::Software
                     path:       buildDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
+        makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/etc/profile.d")
+
+        qtData = <<-CODE
+        QT#{majorVersion}DIR=/usr
+        export QT#{majorVersion}DIR
+        pathappend $QT#{majorVersion}DIR/bin
+        pathappend /usr/lib/qt#{majorVersion}/plugins QT_PLUGIN_PATH
+        pathappend $QT#{majorVersion}DIR/lib/plugins QT_PLUGIN_PATH
+        pathappend /usr/lib/qt#{majorVersion}/qml QML2_IMPORT_PATH
+        pathappend $QT#{majorVersion}DIR/lib/qml QML2_IMPORT_PATH
+        CODE
+        fileUpdateContent("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}etc/profile.d/qt.sh",qtData)
 
         if isGreatestVersion
             directoryContent("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin/qt#{majorVersion}", matchHidden: true).each do |filePath|
