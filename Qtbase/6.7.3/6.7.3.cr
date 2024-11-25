@@ -54,7 +54,19 @@ class Target < ISM::Software
         makeSource( arguments:  "install",
                     path:       buildDirectoryPath)
 
-        exit 1
+        makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
+
+        if isGreatestVersion
+            directoryContent("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin/qt#{majorVersion}", matchHidden: true).each do |filePath|
+
+                fileName = filePath.lchop(filePath[0..filePath.rindex("/")])
+
+                makeLink(   target: "/usr/bin/qt#{majorVersion}/#{fileName}",
+                            path:   "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin/#{fileName}",
+                            type:   :symbolicLinkByOverwrite)
+
+            end
+        end
     end
 
     def install
