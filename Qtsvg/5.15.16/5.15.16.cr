@@ -8,14 +8,9 @@ class Target < ISM::Software
     def configure
         super
 
-        runQmakeCommand(arguments:  "-set QT_VERSION #{version}                             \
-                                    -set QT_INSTALL_PREFIX /usr                             \
-                                    -set QT_INSTALL_ARCHDATA /usr/lib64/qt#{majorVersion}   \
-                                    -set QT_INSTALL_DATA /usr/share/qt#{majorVersion}       \
-                                    -set QT_INSTALL_DOCS /usr/share/doc/qt#{majorVersion}   \
-                                    -set QT_INSTALL_HEADERS /usr/include/qt#{majorVersion}  \
-                                    ..",
-                        path:       buildDirectoryPath)
+        runQmakeCommand(arguments:  "..",
+                        path:       buildDirectoryPath,
+                        environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"}))
     end
     
     def build
