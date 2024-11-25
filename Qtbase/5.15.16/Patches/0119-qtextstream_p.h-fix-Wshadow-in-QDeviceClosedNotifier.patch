@@ -1,0 +1,44 @@
+From 0580022dcb477b6213d836338b363a5b0cff458a Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Tue, 17 Sep 2024 13:14:53 +0200
+Subject: [PATCH 119/130] qtextstream_p.h: fix -Wshadow in
+ QDeviceClosedNotifier
+
+Rename the data member to m_stream, as is idiomatic.
+
+Amends 327b2ba3b77e7a738ccfbe84c6ca5e9525010630.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Task-number: QTBUG-126219
+Change-Id: I830e90e0a6c88acf95de8394e45cad075d4c924e
+Reviewed-by: David Faure <david.faure@kdab.com>
+(cherry picked from commit e585b937167b9746091c520e303657fbec2fe221)
+---
+ src/corelib/serialization/qtextstream_p.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/corelib/serialization/qtextstream_p.h b/src/corelib/serialization/qtextstream_p.h
+index 172824d27d..994e2da1a0 100644
+--- a/src/corelib/serialization/qtextstream_p.h
++++ b/src/corelib/serialization/qtextstream_p.h
+@@ -73,14 +73,14 @@ public:
+         disconnect();
+         if (device)
+             connect(device, SIGNAL(aboutToClose()), this, SLOT(flushStream()));
+-        this->stream = stream;
++        m_stream = stream;
+     }
+ 
+ public Q_SLOTS:
+-    inline void flushStream() { stream->flush(); }
++    void flushStream() { m_stream->flush(); }
+ 
+ private:
+-    QTextStream *stream;
++    QTextStream *m_stream;
+ };
+ #endif
+ 
+-- 
+2.47.0
+

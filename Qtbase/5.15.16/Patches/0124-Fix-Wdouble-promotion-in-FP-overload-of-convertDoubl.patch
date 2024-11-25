@@ -1,0 +1,64 @@
+From 6d36177b3b39d87e45909f2f5895deddac607ce9 Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Thu, 12 Sep 2024 16:38:12 +0200
+Subject: [PATCH 124/130] Fix -Wdouble-promotion in FP overload of
+ convertDoubleTo()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Found by applying headercheck to private headers.
+
+Says GCC:
+
+  global/qnumeric_p.h: In instantiation of ‘[...]
+  {anonymous}::convertDoubleTo(double, T*, bool) [with T = float;
+  [...]]’:
+
+  text/qlocale_p.h:312:51: required from here
+
+  global/qnumeric_p.h:390:22: error: implicit conversion from ‘float’
+  to ‘double’ to match other operand of binary expression
+  [-Werror=double-promotion]
+
+    390 |     if (std::fabs(v) > (std::numeric_limits<T>::max)()) {
+        |         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since we already checked that numeric_limits<T>::max_exponent <
+numeric_limits<double>::max_exponent at this point (see constexpr-if
+at the top of this function template), we can assume that the cast of
+the RHS of the relational operator to double is safe. Use braced
+initialization to statically assert that this is, indeed, the case.
+
+Amends 1e43b64a7a5c3823a6bdcb8d0cd28a17955939a2 and
+a14bba6803f674edede596eaeb5a46feed0f889e.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Task-number: QTBUG-126219
+Change-Id: If2b53d9b8ea7ebfcecec603408681eeffb9aaff6
+Reviewed-by: Øystein Heskestad <oystein.heskestad@qt.io>
+Reviewed-by: Ulf Hermann <ulf.hermann@qt.io>
+(cherry picked from commit c38e58dcb02cd2273ba3c03c65a6f67b37100777)
+
+* asturmlechner 2024-10-23: Resolve conflict with dev branch commit
+   a14bba6803f674edede596eaeb5a46feed0f889e
+---
+ src/corelib/text/qlocale_p.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/text/qlocale_p.h b/src/corelib/text/qlocale_p.h
+index aa5b833a4e..bcf400527a 100644
+--- a/src/corelib/text/qlocale_p.h
++++ b/src/corelib/text/qlocale_p.h
+@@ -256,7 +256,7 @@ public:
+     {
+         if (qIsInf(d))
+             return float(d);
+-        if (std::fabs(d) > (std::numeric_limits<float>::max)()) {
++        if (std::fabs(d) > double{(std::numeric_limits<float>::max)()}) {
+             if (ok)
+                 *ok = false;
+             const float huge = std::numeric_limits<float>::infinity();
+-- 
+2.47.0
+

@@ -1,0 +1,99 @@
+From 20ddb6e561ccc69810a1647168e7e1b27d64e926 Mon Sep 17 00:00:00 2001
+From: Eirik Aavitsland <eirik.aavitsland@qt.io>
+Date: Mon, 24 Jun 2024 11:07:00 +0200
+Subject: [PATCH 114/130] Avoid crash in font distancefield computation
+
+A very particular glyph in one particular font would hit an assert in
+the glyph path simplification code. It is not clear why this happens,
+but at least it should not crash. So instead, this patch makes the
+code bail out cleanly, just leaving that glyph empty (invisible).
+
+Task-number: QTBUG-124310
+Change-Id: Id3b9c0b03fb82800f029fc718000ee6ca81408f7
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Reviewed-by: Eskil Abrahamsen Blomfeldt <eskil.abrahamsen-blomfeldt@qt.io>
+(cherry picked from commit b6f962c87f5084eaf962bfb033b1398f80475120)
+---
+ src/gui/painting/qpathsimplifier.cpp | 18 +++++++++++++-----
+ src/gui/text/qdistancefield.cpp      |  5 +++++
+ 2 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/src/gui/painting/qpathsimplifier.cpp b/src/gui/painting/qpathsimplifier.cpp
+index 256a2fefe7..a2900d8fe4 100644
+--- a/src/gui/painting/qpathsimplifier.cpp
++++ b/src/gui/painting/qpathsimplifier.cpp
+@@ -345,7 +345,7 @@ private:
+ 
+     void initElements(const QVectorPath &path, const QTransform &matrix);
+     void removeIntersections();
+-    void connectElements();
++    bool connectElements();
+     void fillIndices();
+     BVHNode *buildTree(Element **elements, int elementCount);
+     bool intersectNodes(QDataBuffer<Element *> &elements, BVHNode *elementNode, BVHNode *treeNode);
+@@ -490,11 +490,17 @@ PathSimplifier::PathSimplifier(const QVectorPath &path, QDataBuffer<QPoint> &ver
+ {
+     m_points->reset();
+     m_indices->reset();
++    bool ok = true;
+     initElements(path, matrix);
+     if (!m_elements.isEmpty()) {
+         removeIntersections();
+-        connectElements();
+-        fillIndices();
++        ok = connectElements();
++        if (ok)
++            fillIndices();
++    }
++    if (!ok) {
++        m_points->reset();
++        m_indices->reset();
+     }
+ }
+ 
+@@ -679,7 +685,7 @@ void PathSimplifier::removeIntersections()
+     m_bvh.free(); // The bounding volume hierarchy is not needed anymore.
+ }
+ 
+-void PathSimplifier::connectElements()
++bool PathSimplifier::connectElements()
+ {
+     Q_ASSERT(!m_elements.isEmpty());
+     QDataBuffer<Event> events(m_elements.size() * 2);
+@@ -859,7 +865,8 @@ void PathSimplifier::connectElements()
+         }
+ 
+         if (!orderedElements.isEmpty()) {
+-            Q_ASSERT((orderedElements.size() & 1) == 0);
++            if (orderedElements.size() & 1) // Unexpected path structure
++                return false;
+             int i = 0;
+             Element *firstElement = orderedElements.at(0);
+             if (m_points->at(firstElement->indices[0]) != eventPoint) {
+@@ -885,6 +892,7 @@ void PathSimplifier::connectElements()
+         Q_ASSERT((element->next == 0) == (element->previous == 0));
+     }
+ #endif
++    return true;
+ }
+ 
+ void PathSimplifier::fillIndices()
+diff --git a/src/gui/text/qdistancefield.cpp b/src/gui/text/qdistancefield.cpp
+index c843e3b706..71d9763210 100644
+--- a/src/gui/text/qdistancefield.cpp
++++ b/src/gui/text/qdistancefield.cpp
+@@ -508,6 +508,11 @@ static void makeDistanceField(QDistanceFieldData *data, const QPainterPath &path
+     QDataBuffer<quint32> pathIndices(0);
+     QDataBuffer<QPoint> pathVertices(0);
+     qSimplifyPath(path, pathVertices, pathIndices, transform);
++    if (pathVertices.isEmpty()) {
++        qCWarning(lcDistanceField) << "Unexpected glyph path structure, bailing out";
++        memset(data->data, 0, data->nbytes);
++        return;
++    }
+ 
+     const qint32 interiorColor = -0x7f80; // 8:8 signed format, -127.5
+     const qint32 exteriorColor = 0x7f80; // 8:8 signed format, 127.5
+-- 
+2.47.0
+

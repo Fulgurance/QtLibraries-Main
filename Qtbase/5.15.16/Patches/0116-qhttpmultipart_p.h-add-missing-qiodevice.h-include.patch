@@ -1,0 +1,39 @@
+From 4e8b19eed5235400e1d5e5e842fe506283d76a65 Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Tue, 28 May 2024 08:33:22 +0200
+Subject: [PATCH 116/130] qhttpmultipart_p.h: add missing qiodevice.h include
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+QIODevice is a base class of one of the classes defined in this
+header. QtCreator's clangd goes on a rampage in this header as a
+consequence.
+
+Amends the start of the public history.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Change-Id: I06c6a26dde7e7ae72b722136fcd666684733d40f
+Reviewed-by: Mårten Nordheim <marten.nordheim@qt.io>
+(cherry picked from commit 09fce4a587047ff03c7ca37dbb2bb8f71a18a75e)
+---
+ src/network/access/qhttpmultipart_p.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/network/access/qhttpmultipart_p.h b/src/network/access/qhttpmultipart_p.h
+index ead1eadf3b..e45f7545a4 100644
+--- a/src/network/access/qhttpmultipart_p.h
++++ b/src/network/access/qhttpmultipart_p.h
+@@ -54,7 +54,9 @@
+ #include <QtNetwork/private/qtnetworkglobal_p.h>
+ #include "QtCore/qshareddata.h"
+ #include "qnetworkrequest_p.h" // for deriving QHttpPartPrivate from QNetworkHeadersPrivate
++
+ #include "private/qobject_p.h"
++#include <QtCore/qiodevice.h>
+ 
+ QT_REQUIRE_CONFIG(http);
+ 
+-- 
+2.47.0
+

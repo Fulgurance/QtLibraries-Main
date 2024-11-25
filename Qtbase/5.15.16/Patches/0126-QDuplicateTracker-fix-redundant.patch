@@ -1,0 +1,39 @@
+From 8392b71156ad7d08dd2fa115f0ec6983657b9714 Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Thu, 12 Sep 2024 16:33:30 +0200
+Subject: [PATCH 126/130] QDuplicateTracker: fix redundant ;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Found by applying headercheck to private headers, not just public
+ones.
+
+Amends f21a6d409ea0504c64cd72861fc16b6f3e080086.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Task-number: QTBUG-126219
+Change-Id: I8be52a04ae9d9af2e68a72f1128bfbd09fd85e8e
+Reviewed-by: Øystein Heskestad <oystein.heskestad@qt.io>
+Reviewed-by:  Alexey Edelev <alexey.edelev@qt.io>
+(cherry picked from commit 8bfd696297b35684ee1c80127d7b0ce09a374d85)
+---
+ src/corelib/tools/qduplicatetracker_p.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/tools/qduplicatetracker_p.h b/src/corelib/tools/qduplicatetracker_p.h
+index 68284fb916..c5ddfe37af 100644
+--- a/src/corelib/tools/qduplicatetracker_p.h
++++ b/src/corelib/tools/qduplicatetracker_p.h
+@@ -78,7 +78,7 @@ class QDuplicateTracker {
+     QSet<T> set = makeQSet();
+     int setSize = 0;
+ #endif
+-    Q_DISABLE_COPY_MOVE(QDuplicateTracker);
++    Q_DISABLE_COPY_MOVE(QDuplicateTracker)
+ public:
+     QDuplicateTracker() = default;
+     void reserve(int n) { set.reserve(n); }
+-- 
+2.47.0
+

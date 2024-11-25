@@ -1,0 +1,43 @@
+From 914f386ed3b41f8ffe3f4ca8a58b57b574c9aef4 Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Mon, 16 Sep 2024 15:23:38 +0200
+Subject: [PATCH 121/130] qsavefile_p.h: fix missing qsavefile.h include
+
+This causes
+
+  qsavefile_p.h:28:22: error: unknown type name 'QSaveFile'
+      Q_DECLARE_PUBLIC(QSaveFile)
+                       ^
+
+when qsavefile_p.h is included before qsavefile.h was.
+
+Make the header self-sufficient by incuding the Public class' header,
+too, as is customary.
+
+Amends e993df877131cfafbf1a3578dbef233a3041a82f.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Task-number: QTBUG-126219
+Change-Id: I17eb2a357bf1ef7ef5b5e3a3e56c4a921ba30951
+Reviewed-by: Thiago Macieira <thiago.macieira@intel.com>
+(cherry picked from commit ad6e4df580a2437cc69be416956f6128267ffbea)
+---
+ src/corelib/io/qsavefile_p.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/io/qsavefile_p.h b/src/corelib/io/qsavefile_p.h
+index 3f81df9ae2..81a662133a 100644
+--- a/src/corelib/io/qsavefile_p.h
++++ b/src/corelib/io/qsavefile_p.h
+@@ -51,7 +51,7 @@
+ // We mean it.
+ //
+ 
+-#include <QtCore/qglobal.h>
++#include <QtCore/qsavefile.h>
+ 
+ #ifndef QT_NO_TEMPORARYFILE
+ 
+-- 
+2.47.0
+

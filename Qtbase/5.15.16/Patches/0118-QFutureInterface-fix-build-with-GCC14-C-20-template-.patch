@@ -1,0 +1,37 @@
+From 732c9bbdde2d03ff8d32471a0669f1b2d5bd79fb Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Mon, 11 Mar 2024 11:24:00 -0400
+Subject: [PATCH 118/130] QFutureInterface: fix build with GCC14/C++20:
+ template-id not allowed
+
+When declaring a constructor, you must use the injected name, not a
+template.
+
+qfutureinterface.h:472:37: error: template-id not allowed for constructor in C++20 [-Werror=template-id-cdtor]
+
+Pick-to: 6.6
+Change-Id: I6818d78a57394e37857bfffd17bbbf2313001cbf
+Reviewed-by: Ahmad Samir <a.samirh78@gmail.com>
+(cherry picked from commit 111c08d0eaa134652f1f1e602ead1a539614258f)
+Reviewed-by: Qt Cherry-pick Bot <cherrypick_bot@qt-project.org>
+(cherry picked from commit af41847af512f2fb2329cc6b258f6de79ab1355b)
+---
+ src/corelib/thread/qfutureinterface.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/thread/qfutureinterface.h b/src/corelib/thread/qfutureinterface.h
+index e4cc46e929..5a39bb8a90 100644
+--- a/src/corelib/thread/qfutureinterface.h
++++ b/src/corelib/thread/qfutureinterface.h
+@@ -281,7 +281,7 @@ template <>
+ class QFutureInterface<void> : public QFutureInterfaceBase
+ {
+ public:
+-    explicit QFutureInterface<void>(State initialState = NoState)
++    explicit QFutureInterface(State initialState = NoState)
+         : QFutureInterfaceBase(initialState)
+     { }
+ 
+-- 
+2.47.0
+

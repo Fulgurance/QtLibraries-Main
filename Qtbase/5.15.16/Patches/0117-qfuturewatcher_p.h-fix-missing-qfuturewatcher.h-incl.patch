@@ -1,0 +1,53 @@
+From 9add64c6f266747257e043812f5206f4c7c9d44f Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Tue, 11 Jun 2024 12:01:12 +0200
+Subject: [PATCH 117/130] qfuturewatcher_p.h: fix missing qfuturewatcher.h
+ include
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Extending headersclean_check to private headers has shown that
+Q_DECLARE_PUBLIC needs to know the Public class in-size, so a
+forward-declaration is not enough. Says Clang:
+
+  qfuturewatcher_p.h:31:5: error: static_cast from 'QObject *' to 'QFutureWatcherBase *', which are not related by inheritance, is not allowed
+      Q_DECLARE_PUBLIC(QFutureWatcherBase)
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Amends the start of the public history.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Task-number: QTBUG-126219
+Change-Id: I1e132aaa844f5c87d57446e8818280fd141d2b1e
+Reviewed-by: Mårten Nordheim <marten.nordheim@qt.io>
+Reviewed-by: Ivan Solovev <ivan.solovev@qt.io>
+(cherry picked from commit b58d926090620079f602f4f2ce9f17fe7025c962)
+---
+ src/corelib/thread/qfuturewatcher_p.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/corelib/thread/qfuturewatcher_p.h b/src/corelib/thread/qfuturewatcher_p.h
+index ead247b040..2911e0fafe 100644
+--- a/src/corelib/thread/qfuturewatcher_p.h
++++ b/src/corelib/thread/qfuturewatcher_p.h
+@@ -51,6 +51,8 @@
+ // We mean it.
+ //
+ 
++#include <QtCore/qfuturewatcher.h>
++
+ #include "qfutureinterface_p.h"
+ #include <qlist.h>
+ 
+@@ -60,7 +62,6 @@ QT_REQUIRE_CONFIG(future);
+ 
+ QT_BEGIN_NAMESPACE
+ 
+-class QFutureWatcherBase;
+ class QFutureWatcherBasePrivate : public QObjectPrivate,
+                                   public QFutureCallOutInterface
+ {
+-- 
+2.47.0
+

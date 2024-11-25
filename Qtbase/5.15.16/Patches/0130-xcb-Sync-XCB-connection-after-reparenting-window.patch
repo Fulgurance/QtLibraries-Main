@@ -1,0 +1,32 @@
+From 2529f7f0c2333d437089c775c9c30f624d1fd5bc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tor=20Arne=20Vestb=C3=B8?= <tor.arne.vestbo@qt.io>
+Date: Wed, 28 Aug 2024 13:31:13 +0200
+Subject: [PATCH 130/130] xcb: Sync XCB connection after reparenting window
+
+This is important for the reparenting to take effect even if there
+are no other state changes to the window, such as changing its
+geometry.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Change-Id: I9b39b56d163faf7a9b472cefbb19efdb944cb304
+Reviewed-by: Liang Qi <liang.qi@qt.io>
+(cherry picked from commit 92619ce2ec8381aa01647337665e626b84063f59)
+---
+ src/plugins/platforms/xcb/qxcbwindow.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/plugins/platforms/xcb/qxcbwindow.cpp b/src/plugins/platforms/xcb/qxcbwindow.cpp
+index 9d4da78888..ed8c4ebd8f 100644
+--- a/src/plugins/platforms/xcb/qxcbwindow.cpp
++++ b/src/plugins/platforms/xcb/qxcbwindow.cpp
+@@ -1299,6 +1299,7 @@ void QXcbWindow::setParent(const QPlatformWindow *parent)
+         m_embedded = false;
+     }
+     xcb_reparent_window(xcb_connection(), xcb_window(), xcb_parent_id, topLeft.x(), topLeft.y());
++    connection()->sync();
+ }
+ 
+ void QXcbWindow::setWindowTitle(const QString &title)
+-- 
+2.47.0
+

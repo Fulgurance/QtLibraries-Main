@@ -1,0 +1,75 @@
+From 64939499547a926173aacd489d7449a8d444873e Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Mon, 29 Jul 2024 20:10:50 +0200
+Subject: [PATCH 122/130] Add __attribute__((format(printf()))) to
+ q(v)nprintf()
+
+They were lacking it since the start of the public history, and
+porting to std::snprintf() (which has the warning) as part of making
+Qt compile with QT_NO_SNPRINTF has turned up surprisingly many
+-Wformat warnings, so enable the warning for the remaining (non-tree)
+users.
+
+Backporting aggressively, as this might unearth security bugs in user
+code.
+
+[ChangeLog][QtCore][q(v)snprintf] Added attributes for GCC-compatible
+compilers to detect format/argument mismatches. If this throws warnings
+for your calls now, don't ignore them. printf() format mistakes could
+be security-relevant. You may also find that you relied on undocumented
+behavior, such as that certain implementations (Windows, Android, WASM)
+of qsnprintf() support char16_t* instead of wchar_t* for %ls. In that
+case, you should port to qUtf16Printable() and QString::asprintf(), or
+suppress the warning and port away from the platform dependence at your
+earliest convenience.
+
+Task-number: QTBUG-127110
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Change-Id: I5c1fd9b2d5d2d55c68773f33edfd76acacd2408c
+Reviewed-by: Volker Hilsheimer <volker.hilsheimer@qt.io>
+Reviewed-by: Jason McDonald <macadder1@gmail.com>
+(cherry picked from commit 64416d3cf645187385d8ad90bc44d9c8e9ce864f)
+
+* asturmlechner 2024-10-16: Resolve conflict with dev branch commit
+   631127126cc14e7c01cc611532b3256b58785670
+---
+ src/corelib/text/qbytearray.h                         | 6 ++++--
+ tests/auto/corelib/text/qbytearray/tst_qbytearray.cpp | 4 ++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/src/corelib/text/qbytearray.h b/src/corelib/text/qbytearray.h
+index f4c335ca93..e1bcdc3e68 100644
+--- a/src/corelib/text/qbytearray.h
++++ b/src/corelib/text/qbytearray.h
+@@ -102,8 +102,10 @@ Q_CORE_EXPORT int qstrnicmp(const char *, const char *, uint len);
+ Q_CORE_EXPORT int qstrnicmp(const char *, qsizetype, const char *, qsizetype = -1);
+ 
+ // implemented in qvsnprintf.cpp
+-Q_CORE_EXPORT int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap);
+-Q_CORE_EXPORT int qsnprintf(char *str, size_t n, const char *fmt, ...);
++Q_CORE_EXPORT int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
++    Q_ATTRIBUTE_FORMAT_PRINTF(3, 0);
++Q_CORE_EXPORT int qsnprintf(char *str, size_t n, const char *fmt, ...)
++    Q_ATTRIBUTE_FORMAT_PRINTF(3, 4);
+ 
+ // qChecksum: Internet checksum
+ Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);                            // ### Qt 6: Remove
+diff --git a/tests/auto/corelib/text/qbytearray/tst_qbytearray.cpp b/tests/auto/corelib/text/qbytearray/tst_qbytearray.cpp
+index d8aa17d9ef..d539941378 100644
+--- a/tests/auto/corelib/text/qbytearray/tst_qbytearray.cpp
++++ b/tests/auto/corelib/text/qbytearray/tst_qbytearray.cpp
+@@ -869,7 +869,11 @@ void tst_QByteArray::qvsnprintf()
+ 
+ #ifndef Q_OS_WIN
+     memset(buf, 42, sizeof(buf));
++    QT_WARNING_PUSH
++    QT_WARNING_DISABLE_GCC("-Wformat-zero-length")
++    QT_WARNING_DISABLE_CLANG("-Wformat-zero-length")
+     QCOMPARE(::qsnprintf(buf, 10, ""), 0);
++    QT_WARNING_POP
+ #endif
+ }
+ 
+-- 
+2.47.0
+
