@@ -1,5 +1,5 @@
 {
-  "port": "BaseLibraries-Main",
+  "port": "QtLibraries-Main",
   "name": "Qtbase",
   "version": "5.15.16",
   "architectures": ["x86_64"],
