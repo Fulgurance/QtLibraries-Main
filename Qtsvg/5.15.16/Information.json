@@ -1,0 +1,23 @@
+{
+  "port": "QtLibraries-Main",
+  "name": "Qtsvg",
+  "version": "5.15.16",
+  "architectures": ["x86_64"],
+  "description": "SVG rendering library for the Qt framework",
+  "website": "https://invent.kde.org/qt/qt/qtsvg",
+  "installedFiles": [],
+  "dependencies": [
+    {
+      "port": "QtLibraries-Main",
+      "name": "Qtbase",
+      "version": ">=5.0.0 <6.0.0",
+      "options": []
+    }
+  ],
+  "kernelDependencies": [],
+  "options": [],
+  "uniqueDependencies": [],
+  "uniqueOptions": [],
+  "selectedDependencies": [],
+  "allowCodependencies": []
+}
