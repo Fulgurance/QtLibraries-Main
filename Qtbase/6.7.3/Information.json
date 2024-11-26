@@ -8,7 +8,7 @@
   "installedFiles": [],
   "dependencies": [
     {
-      "port": "GraphicsLibraries",
+      "port": "GraphicsLibraries-Main",
       "name": "Mesa",
       "version": ">=23.1.6",
       "options": []
