@@ -9,7 +9,8 @@ class Target < ISM::Software
         super
 
         runCmakeCommand(arguments:      "..",
-                        path:           buildDirectoryPath)
+                        path:           buildDirectoryPath,
+                        environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:/usr/lib/llvm/#{softwareMajorVersion("@ProgrammingLanguages-Main:Llvm")}/bin:$PATH"})
     end
 
     def build
