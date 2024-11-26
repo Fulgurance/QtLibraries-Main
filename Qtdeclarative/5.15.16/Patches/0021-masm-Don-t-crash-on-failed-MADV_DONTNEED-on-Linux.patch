@@ -1,0 +1,52 @@
+From 7c78088d55ec6eb1f82bc0e10662078e1dbb14a6 Mon Sep 17 00:00:00 2001
+From: Antonio Napolitano <anton@polit.no>
+Date: Sat, 30 Dec 2023 19:11:32 +0100
+Subject: [PATCH 21/22] masm: Don't crash on failed MADV_DONTNEED on Linux
+
+The application could call mlockall(MCL_CURRENT|MCL_FUTURE) to lock all
+its memory for performance reasons, causing the madvise call to fail.
+There's no need to crash. Instead, manually zero-out the memory when
+decommitting.
+
+Fixes: QTBUG-120450
+Pick-to: 5.15 6.2 6.5 6.6 6.7
+Change-Id: I6f1a8968853cc5e61561371bd2a435a686eaf0e4
+Reviewed-by: Fabian Kosmale <fabian.kosmale@qt.io>
+Reviewed-by: Ulf Hermann <ulf.hermann@qt.io>
+(cherry picked from commit 524d260c5c135d193e06350e48357444ddb13ddb)
+---
+ src/3rdparty/masm/wtf/OSAllocatorPosix.cpp | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/src/3rdparty/masm/wtf/OSAllocatorPosix.cpp b/src/3rdparty/masm/wtf/OSAllocatorPosix.cpp
+index b5c5f6a2b0..1a3d3cdf97 100644
+--- a/src/3rdparty/masm/wtf/OSAllocatorPosix.cpp
++++ b/src/3rdparty/masm/wtf/OSAllocatorPosix.cpp
+@@ -112,10 +112,7 @@ void* OSAllocator::reserveUncommitted(size_t bytes, Usage usage, bool writable,
+     if (result == MAP_FAILED)
+         CRASH();
+ 
+-    while (madvise(result, bytes, MADV_DONTNEED)) {
+-        if (errno != EAGAIN)
+-            CRASH();
+-    }
++    while (madvise(result, bytes, MADV_DONTNEED) == -1 && errno == EAGAIN) { }
+ 
+     if (fd != -1)
+         close(fd);
+@@ -248,8 +245,10 @@ void OSAllocator::decommit(void* address, size_t bytes)
+     mmap(address, bytes, PROT_NONE, MAP_FIXED | MAP_LAZY | MAP_PRIVATE | MAP_ANON, -1, 0);
+ #elif OS(LINUX)
+     while (madvise(address, bytes, MADV_DONTNEED)) {
+-        if (errno != EAGAIN)
+-            CRASH();
++        if (errno != EAGAIN) {
++            memset(address, 0, bytes); // We rely on madvise to zero-out the memory
++            break;
++        }
+     }
+     if (mprotect(address, bytes, PROT_NONE))
+         CRASH();
+-- 
+2.47.0
+
