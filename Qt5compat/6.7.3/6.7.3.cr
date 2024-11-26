@@ -15,15 +15,14 @@ class Target < ISM::Software
     def build
         super
 
-        runNinjaCommand(path: buildDirectoryPath)
+        makeSource(path: buildDirectoryPath)
     end
-    
+
     def prepareInstallation
         super
 
-        runNinjaCommand(arguments:      "install",
-                        path:           buildDirectoryPath,
-                        environment:    {"DESTDIR" => "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"})
+        makeSource( arguments:  "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
+                    path:       buildDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
 
