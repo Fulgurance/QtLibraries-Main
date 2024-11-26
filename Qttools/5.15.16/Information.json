@@ -12,6 +12,12 @@
       "name": "Qtbase",
       "version": ">=5.0.0 ~ <6.0.0",
       "options": []
+    },
+    {
+      "port": "ProgrammingLanguages-Main",
+      "name": "Llvm",
+      "version": ">=16.0.5",
+      "options": ["Clang"]
     }
   ],
   "kernelDependencies": [],
