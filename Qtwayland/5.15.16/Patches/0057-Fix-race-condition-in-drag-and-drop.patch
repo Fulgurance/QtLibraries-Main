@@ -1,0 +1,76 @@
+From c326fcaebad2e02dc23c301eb3e53c268e12bd49 Mon Sep 17 00:00:00 2001
+From: Eskil Abrahamsen Blomfeldt <eskil.abrahamsen-blomfeldt@qt.io>
+Date: Fri, 10 May 2024 13:20:30 +0200
+Subject: [PATCH 57/59] Fix race condition in drag and drop
+
+The data source may be deleted by libwayland while we hold a
+reference to it. This could cause crashes when dragging
+and dropping repeatedly and very rapidly between two
+components.
+
+Tapping into sourceDestroyed() for this as well allows us to
+recover more gracefully.
+
+This also required adding some null pointer checks to the code,
+since it wasn't really prepared for the data source
+disappearing.
+
+Pick-to: 5.15 6.2 6.5 6.7 6.8
+Fixes: QTBUG-124502
+Change-Id: Ic3df8bf70176c5424ac5c693f8456f61e7b2762b
+Reviewed-by: Paul Olav Tvete <paul.tvete@qt.io>
+(cherry picked from commit 792bd8510e3bc6b47bcaedfb1386390ce3a10a3a)
+---
+ src/compositor/wayland_wrapper/qwldatadevice.cpp | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/src/compositor/wayland_wrapper/qwldatadevice.cpp b/src/compositor/wayland_wrapper/qwldatadevice.cpp
+index a3a795f9..f301678e 100644
+--- a/src/compositor/wayland_wrapper/qwldatadevice.cpp
++++ b/src/compositor/wayland_wrapper/qwldatadevice.cpp
+@@ -76,6 +76,9 @@ void DataDevice::sourceDestroyed(DataSource *source)
+ {
+     if (m_selectionSource == source)
+         m_selectionSource = nullptr;
++
++    if (m_dragDataSource == source)
++        m_dragDataSource = nullptr;
+ }
+ 
+ #if QT_CONFIG(draganddrop)
+@@ -105,9 +108,11 @@ void DataDevice::setDragFocus(QWaylandSurface *focus, const QPointF &localPositi
+     if (m_dragDataSource && !offer)
+         return;
+ 
+-    send_enter(resource->handle, serial, focus->resource(),
+-               wl_fixed_from_double(localPosition.x()), wl_fixed_from_double(localPosition.y()),
+-               offer->resource()->handle);
++    if (offer) {
++        send_enter(resource->handle, serial, focus->resource(),
++                   wl_fixed_from_double(localPosition.x()), wl_fixed_from_double(localPosition.y()),
++                   offer->resource()->handle);
++    }
+ 
+     m_dragFocus = focus;
+     m_dragFocusResource = resource;
+@@ -139,7 +144,7 @@ void DataDevice::drop()
+     if (m_dragFocusResource) {
+         send_drop(m_dragFocusResource->handle);
+         setDragFocus(nullptr, QPoint());
+-    } else {
++    } else if (m_dragDataSource) {
+         m_dragDataSource->cancel();
+     }
+     m_dragOrigin = nullptr;
+@@ -155,6 +160,8 @@ void DataDevice::data_device_start_drag(Resource *resource, struct ::wl_resource
+ {
+     m_dragClient = resource->client();
+     m_dragDataSource = source ? DataSource::fromResource(source) : nullptr;
++    if (m_dragDataSource)
++        m_dragDataSource->setDevice(this);
+     m_dragOrigin = QWaylandSurface::fromResource(origin);
+     QWaylandDrag *drag = m_seat->drag();
+     setDragIcon(icon ? QWaylandSurface::fromResource(icon) : nullptr);
+-- 
+2.47.0
+

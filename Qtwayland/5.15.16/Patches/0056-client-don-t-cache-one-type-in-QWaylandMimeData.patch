@@ -1,0 +1,47 @@
+From 7aaff2f1bb1703535ee29a47383617c9274253d3 Mon Sep 17 00:00:00 2001
+From: Liang Qi <liang.qi@qt.io>
+Date: Wed, 13 Mar 2024 11:53:58 +0100
+Subject: [PATCH 56/59] client: don't cache one type in QWaylandMimeData
+
+"application/vnd.portal.filetransfer", which is only valid for one
+time use.
+
+Fixes: QTBUG-107858
+Pick-to: 6.7 6.6 6.5 6.2 5.15
+Change-Id: I094de22ea0bb9b3577572e6c57ebe42cdc8c7b41
+Reviewed-by: David Edmundson <davidedmundson@kde.org>
+(cherry picked from commit 19758eb4093e8d60c69f75174afb7457490e2332)
+---
+ src/client/qwaylanddataoffer.cpp | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/src/client/qwaylanddataoffer.cpp b/src/client/qwaylanddataoffer.cpp
+index fe0ea8c9..0241a1df 100644
+--- a/src/client/qwaylanddataoffer.cpp
++++ b/src/client/qwaylanddataoffer.cpp
+@@ -56,6 +56,11 @@ static QString utf8Text()
+     return QStringLiteral("text/plain;charset=utf-8");
+ }
+ 
++static QString portalFileTransfer()
++{
++    return QStringLiteral("application/vnd.portal.filetransfer");
++}
++
+ QWaylandDataOffer::QWaylandDataOffer(QWaylandDisplay *display, struct ::wl_data_offer *offer)
+     : QtWayland::wl_data_offer(offer)
+     , m_display(display)
+@@ -182,7 +187,9 @@ QVariant QWaylandMimeData::retrieveData_sys(const QString &mimeType, QVariant::T
+     }
+ 
+     close(pipefd[0]);
+-    m_data.insert(mimeType, content);
++    if (mimeType != portalFileTransfer())
++        m_data.insert(mimeType, content);
++
+     return content;
+ }
+ 
+-- 
+2.47.0
+

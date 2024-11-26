@@ -1,0 +1,32 @@
+From 383ac4eaeae5538f0ceb0943d68591c466bb1041 Mon Sep 17 00:00:00 2001
+From: Liu Zheng <liuzheng@uniontech.com>
+Date: Wed, 24 Jul 2024 09:22:42 +0800
+Subject: [PATCH 58/59] fix: variable not initialized
+
+If the disableResizeCheck logic is not checked, initialization will fail. Problems will arise later.
+
+Pick-to: 6.8 6.7 6.5 6.2 5.15
+Change-Id: Ifffd4f7407b3ef616d436b81f3b2148c1139c3f7
+Reviewed-by: Liang Qi <liang.qi@qt.io>
+(cherry picked from commit dc49720c135e0d59dff42c9fd28f57a6199c33b9)
+---
+ .../client/wayland-egl/qwaylandeglwindow.cpp                   | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/hardwareintegration/client/wayland-egl/qwaylandeglwindow.cpp b/src/hardwareintegration/client/wayland-egl/qwaylandeglwindow.cpp
+index dbe2845a..95e8c666 100644
+--- a/src/hardwareintegration/client/wayland-egl/qwaylandeglwindow.cpp
++++ b/src/hardwareintegration/client/wayland-egl/qwaylandeglwindow.cpp
+@@ -118,7 +118,8 @@ void QWaylandEglWindow::updateSurface(bool create)
+     } else {
+         QReadLocker locker(&mSurfaceLock);
+         if (m_waylandEglWindow) {
+-            int current_width, current_height;
++            int current_width = 0;
++            int current_height = 0;
+             static bool disableResizeCheck = qgetenv("QT_WAYLAND_DISABLE_RESIZECHECK").toInt();
+ 
+             if (!disableResizeCheck) {
+-- 
+2.47.0
+

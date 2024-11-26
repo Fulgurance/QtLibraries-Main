@@ -1,0 +1,60 @@
+From a00ef4d71c85d60da6fdc9295fb389decc10f8c9 Mon Sep 17 00:00:00 2001
+From: Ilya Fedin <fedin-ilja2010@ya.ru>
+Date: Sun, 3 Dec 2023 19:12:03 +0400
+Subject: [PATCH 55/59] Client: Fix enter event cursor position with xdg-popup
+ and QHighDpiScaling
+
+QWindowSystemInterface::handleEnterEvent accepts device-dependent
+position while QCursor::pos provides device-independent position.
+
+Use QWaylandCursor::pos instead.
+
+Pick-to: 6.6 6.5 6.2 5.15
+Change-Id: I70d2997610f7a34c6763bd4f10f20a65c3debdbe
+Reviewed-by: David Edmundson <davidedmundson@kde.org>
+(cherry picked from commit 8e57e8b51b2b701c5520f37b7d78de5b3c488500)
+---
+ .../shellintegration/xdg-shell/qwaylandxdgshell.cpp | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/src/plugins/shellintegration/xdg-shell/qwaylandxdgshell.cpp b/src/plugins/shellintegration/xdg-shell/qwaylandxdgshell.cpp
+index 535c3398..9c6cbb81 100644
+--- a/src/plugins/shellintegration/xdg-shell/qwaylandxdgshell.cpp
++++ b/src/plugins/shellintegration/xdg-shell/qwaylandxdgshell.cpp
+@@ -44,6 +44,7 @@
+ #include <QtWaylandClient/private/qwaylandwindow_p.h>
+ #include <QtWaylandClient/private/qwaylandinputdevice_p.h>
+ #include <QtWaylandClient/private/qwaylandscreen_p.h>
++#include <QtWaylandClient/private/qwaylandcursor_p.h>
+ #include <QtWaylandClient/private/qwaylandabstractdecoration_p.h>
+ 
+ #include <QtGui/private/qwindow_p.h>
+@@ -229,8 +230,10 @@ QWaylandXdgSurface::Popup::~Popup()
+             leave = m_xdgSurface->window()->window();
+         QWindowSystemInterface::handleLeaveEvent(leave);
+ 
+-        if (QWindow *enter = QGuiApplication::topLevelAt(QCursor::pos()))
+-            QWindowSystemInterface::handleEnterEvent(enter, enter->mapFromGlobal(QCursor::pos()), QCursor::pos());
++        if (QWindow *enter = QGuiApplication::topLevelAt(QCursor::pos())) {
++            const auto pos = m_xdgSurface->window()->display()->waylandCursor()->pos();
++            QWindowSystemInterface::handleEnterEvent(enter, enter->handle()->mapFromGlobal(pos), pos);
++        }
+     }
+ }
+ 
+@@ -462,8 +465,10 @@ void QWaylandXdgSurface::setGrabPopup(QWaylandWindow *parent, QWaylandInputDevic
+     if (m_popup && m_popup->m_xdgSurface && m_popup->m_xdgSurface->window())
+         enter = m_popup->m_xdgSurface->window()->window();
+ 
+-    if (enter)
+-        QWindowSystemInterface::handleEnterEvent(enter, enter->mapFromGlobal(QCursor::pos()), QCursor::pos());
++    if (enter) {
++        const auto pos = m_popup->m_xdgSurface->window()->display()->waylandCursor()->pos();
++        QWindowSystemInterface::handleEnterEvent(enter, enter->handle()->mapFromGlobal(pos), pos);
++    }
+ }
+ 
+ void QWaylandXdgSurface::xdg_surface_configure(uint32_t serial)
+-- 
+2.47.0
+
