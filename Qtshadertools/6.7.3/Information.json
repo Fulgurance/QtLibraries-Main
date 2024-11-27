@@ -1,15 +1,15 @@
 {
   "port": "QtLibraries-Main",
-  "name": "Qtdeclarative",
+  "name": "Qtshadertools",
   "version": "6.7.3",
   "architectures": ["x86_64"],
-  "description": "Qt Declarative (Quick 2)",
-  "website": "https://invent.kde.org/qt/qt/qtdeclarative",
+  "description": "Qt APIs and Tools for Graphics Pipelines",
+  "website": "https://invent.kde.org/qt/qt/qtshadertools",
   "installedFiles": [],
   "dependencies": [
     {
       "port": "QtLibraries-Main",
-      "name": "Qtshadertools",
+      "name": "Qtbase",
       "version": ">=6.0.0 ~ <7.0.0",
       "options": []
     }
