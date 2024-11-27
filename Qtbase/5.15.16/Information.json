@@ -99,7 +99,7 @@
     {
       "name": "Openssl",
       "description": "Enable openssl support",
-      "active": false,
+      "active": true,
       "dependencies": [
         {
           "port": "SecuritySoftwares-Main",
