@@ -12,12 +12,6 @@
       "name": "Qtdeclarative",
       "version": ">=6.0.0 ~ <7.0.0",
       "options": []
-    },
-    {
-      "port": "QtLibraries-Main",
-      "name": "Qtshadertools",
-      "version": ">=6.0.0 ~ <7.0.0",
-      "options": []
     }
   ],
   "kernelDependencies": [],
