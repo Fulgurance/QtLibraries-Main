@@ -47,7 +47,7 @@
     {
       "name": "Xcb",
       "description": "Enable xcb support for X11",
-      "active": false,
+      "active": true,
       "dependencies": [
         {
           "port": "XorgBase-Main",
