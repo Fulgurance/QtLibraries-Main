@@ -9,7 +9,13 @@
   "dependencies": [
     {
       "port": "QtLibraries-Main",
-      "name": "Qtbase",
+      "name": "Qtdeclarative",
+      "version": ">=5.0.0 ~ <6.0.0",
+      "options": []
+    },
+    {
+      "port": "QtLibraries-Main",
+      "name": "Qtsvg",
       "version": ">=5.0.0 ~ <6.0.0",
       "options": []
     }
