@@ -8,22 +8,26 @@ class Target < ISM::Software
     def configure
         super
 
-        runCmakeCommand(arguments:      "..",
-                        path:           buildDirectoryPath,
+        runCmakeCommand(arguments:      "-B #{buildDirectoryPath}   \
+                                        -G Ninja                    \
+                                        -DCMAKE_MESSAGE_LOG_LEVEL=STATUS",
+                        path:           mainWorkDirectoryPath,
                         environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"})
     end
 
     def build
         super
 
-        makeSource(path: buildDirectoryPath)
+        runCmakeCommand(arguments:      "--build #{buildDirectoryPath}",
+                        path:           mainWorkDirectoryPath)
     end
 
     def prepareInstallation
         super
 
-        makeSource( arguments:  "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
-                    path:       buildDirectoryPath)
+        runCmakeCommand(arguments:      "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}  \
+                                        --install #{buildDirectoryPath}",
+                        path:           mainWorkDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
 
