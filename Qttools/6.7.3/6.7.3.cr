@@ -24,9 +24,9 @@ class Target < ISM::Software
     def prepareInstallation
         super
 
-        runCmakeCommand(arguments:      "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}  \
-                                        --install #{buildDirectoryPath}",
-                        path:           mainWorkDirectoryPath)
+        runCmakeCommand(arguments:      "--install #{buildDirectoryPath}",
+                        path:           mainWorkDirectoryPath,
+                        environment:    {"DESTDIR" => "#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}"})
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}usr/share/pixmaps")
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}usr/share/applications")
