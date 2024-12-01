@@ -1,0 +1,23 @@
+{
+  "port": "QtLibraries-Main",
+  "name": "Qtquick3d",
+  "version": "5.15.16",
+  "architectures": ["x86_64"],
+  "description": "Qt module and API for defining 3D content in Qt QuickTools",
+  "website": "https://invent.kde.org/qt/qt/qtquick3d",
+  "installedFiles": [],
+  "dependencies": [
+    {
+      "port": "QtLibraries-Main",
+      "name": "Qtdeclarative",
+      "version": ">=5.0.0 ~ <6.0.0",
+      "options": []
+    }
+  ],
+  "kernelDependencies": [],
+  "options": [],
+  "uniqueDependencies": [],
+  "uniqueOptions": [],
+  "selectedDependencies": [],
+  "allowCodependencies": []
+}
