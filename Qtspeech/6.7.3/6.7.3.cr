@@ -9,8 +9,7 @@ class Target < ISM::Software
         super
 
         runCmakeCommand(arguments:      "-B #{buildDirectoryPath}   \
-                                        -G Ninja                    \
-                                        -DCMAKE_MESSAGE_LOG_LEVEL=STATUS",
+                                        -G Ninja",
                         path:           mainWorkDirectoryPath,
                         environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"})
     end

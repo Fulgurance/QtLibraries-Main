@@ -8,7 +8,9 @@ class Target < ISM::Software
     def configure
         super
 
-        runCmakeCommand(arguments:      "-DCMAKE_INSTALL_PREFIX=/usr                                        \
+        runCmakeCommand(arguments:      "-B #{buildDirectoryPath}                                           \
+                                        -G Ninja                                                            \
+                                        -DCMAKE_INSTALL_PREFIX=/usr                                         \
                                         -DINSTALL_ARCHDATADIR=/usr/lib/qt#{majorVersion}                    \
                                         -DINSTALL_BINDIR=/usr/bin/qt#{majorVersion}                         \
                                         -DINSTALL_PLUGINSDIR=/usr/lib/qt#{majorVersion}/plugin              \
@@ -35,22 +37,23 @@ class Target < ISM::Software
                                         -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
                                         -DFEATURE_system_zlib=ON                                            \
-                                        -DFEATURE_system_pcre2=ON                                           \
-                                        ..",
-                        path:           buildDirectoryPath)
+                                        -DFEATURE_system_pcre2=ON",
+                        path:           mainWorkDirectoryPath,)
     end
 
     def build
         super
 
-        makeSource(path: buildDirectoryPath)
+        runCmakeCommand(arguments:      "--build #{buildDirectoryPath}",
+                        path:           mainWorkDirectoryPath)
     end
 
     def prepareInstallation
         super
 
-        makeSource( arguments:  "INSTALL_ROOT=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath} install",
-                    path:       buildDirectoryPath)
+        runCmakeCommand(arguments:      "DESTDIR=#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}  \
+                                        --install #{buildDirectoryPath}",
+                        path:           mainWorkDirectoryPath)
 
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/etc/profile.d")
