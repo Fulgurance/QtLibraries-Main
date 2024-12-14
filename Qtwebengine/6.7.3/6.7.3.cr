@@ -10,7 +10,7 @@ class Target < ISM::Software
 
         runCmakeCommand(arguments:      "-B #{buildDirectoryPath}   \
                                         -G Ninja                    \
-                                        -DINSTALL_GN=OFF",
+                                        -DFEATURE_webengine_build_gn=OFF",
                         path:           mainWorkDirectoryPath,
                         environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"})
     end
