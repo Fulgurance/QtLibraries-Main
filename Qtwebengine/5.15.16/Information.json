@@ -12,6 +12,12 @@
       "name": "Qtbase",
       "version": ">=5.0.0 ~ <6.0.0",
       "options": []
+    },
+    {
+      "port": "BaseLibraries-Main",
+      "name": "Html5lib",
+      "version": ">=1.1.0",
+      "options": []
     }
   ],
   "kernelDependencies": [],
