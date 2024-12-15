@@ -13,7 +13,7 @@ class Target < ISM::Software
                                         -DCMAKE_INSTALL_PREFIX=/usr                                         \
                                         -DINSTALL_ARCHDATADIR=/usr/lib/qt#{majorVersion}                    \
                                         -DINSTALL_BINDIR=/usr/bin/qt#{majorVersion}                         \
-                                        -DINSTALL_PLUGINSDIR=/usr/lib/qt#{majorVersion}/plugin              \
+                                        -DINSTALL_PLUGINSDIR=/usr/lib/qt#{majorVersion}/plugins             \
                                         -DINSTALL_INCLUDEDIR=/usr/include/qt#{majorVersion}                 \
                                         -DINSTALL_DATADIR=/usr/share/qt#{majorVersion}                      \
                                         -DINSTALL_DOCDIR=/usr/share/doc/qt#{majorVersion}                   \
