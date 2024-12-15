@@ -9,7 +9,8 @@ class Target < ISM::Software
         super
 
         runCmakeCommand(arguments:      "-B #{buildDirectoryPath}   \
-                                        -G Ninja",
+                                        -G Ninja                    \
+                                        -DFEATURE_qtpdf_build=OFF",
                         path:           mainWorkDirectoryPath,
                         environment:    {"PATH" => "/usr/bin/qt#{majorVersion}:$PATH"})
     end
