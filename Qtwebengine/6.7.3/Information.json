@@ -18,6 +18,12 @@
       "name": "Html5lib",
       "version": ">=1.1.0",
       "options": []
+    },
+    {
+      "port": "Utilities-Main",
+      "name": "Cups",
+      "version": ">=2.4.6",
+      "options": []
     }
   ],
   "kernelDependencies": [],
