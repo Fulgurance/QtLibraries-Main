@@ -1,0 +1,23 @@
+{
+  "port": "QtLibraries-Main",
+  "name": "Qtgraphicaleffects",
+  "version": "5.15.16",
+  "architectures": ["x86_64"],
+  "description": "Set of QML types for adding visual effects to user interfaces",
+  "website": "https://invent.kde.org/qt/qt/qtgraphicaleffects",
+  "installedFiles": [],
+  "dependencies": [
+    {
+      "port": "QtLibraries-Main",
+      "name": "Qtdeclarative",
+      "version": ">=5.0.0 ~ <6.0.0",
+      "options": []
+    }
+  ],
+  "kernelDependencies": [],
+  "options": [],
+  "uniqueDependencies": [],
+  "uniqueOptions": [],
+  "selectedDependencies": [],
+  "allowCodependencies": []
+}
