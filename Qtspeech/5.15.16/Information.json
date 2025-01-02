@@ -9,7 +9,7 @@
   "dependencies": [
     {
       "port": "QtLibraries-Main",
-      "name": "Qtbmultimedia",
+      "name": "Qtmultimedia",
       "version": ">=5.0.0 ~ <6.0.0",
       "options": []
     }
