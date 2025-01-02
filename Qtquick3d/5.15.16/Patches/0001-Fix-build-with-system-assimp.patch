@@ -1,0 +1,27 @@
+From 4db879b73a7b7546acab87bec50f9265dd1da8bd Mon Sep 17 00:00:00 2001
+From: Albert Astals Cid <aacid@kde.org>
+Date: Sat, 5 Jun 2021 12:26:07 +0200
+Subject: [PATCH] Fix build with system assimp
+
+This is *not* a backport from upstream given that upstream has stopped
+using qmake for building Qt after 5.15
+---
+ src/plugins/assetimporters/assimp/assimp.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/plugins/assetimporters/assimp/assimp.pro b/src/plugins/assetimporters/assimp/assimp.pro
+index ca5c499ed..174a075bd 100644
+--- a/src/plugins/assetimporters/assimp/assimp.pro
++++ b/src/plugins/assetimporters/assimp/assimp.pro
+@@ -10,7 +10,7 @@ QT_FOR_CONFIG += assetimporters-private
+ include($$OUT_PWD/../qtassetimporters-config.pri)
+ 
+ qtConfig(system-assimp):!if(cross_compile:host_build) {
+-    QMAKE_USE_PRIVATE += assimp
++    QMAKE_USE_PRIVATE += quick3d-assimp
+ } else {
+     include(../../../3rdparty/assimp/assimp.pri)
+ }
+-- 
+2.47.0
+
