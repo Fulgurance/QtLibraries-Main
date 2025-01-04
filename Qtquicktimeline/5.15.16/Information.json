@@ -1,15 +1,15 @@
 {
   "port": "QtLibraries-Main",
-  "name": "Qtquick3d",
+  "name": "Qtquicktimeline",
   "version": "5.15.16",
   "architectures": ["x86_64"],
-  "description": "Qt module and API for defining 3D content in Qt QuickTools",
-  "website": "https://invent.kde.org/qt/qt/qtquick3d",
+  "description": "Qt module for keyframe-based timeline construction",
+  "website": "https://invent.kde.org/qt/qt/qtquicktimeline",
   "installedFiles": [],
   "dependencies": [
     {
       "port": "QtLibraries-Main",
-      "name": "Qtquicktimeline",
+      "name": "Qtdeclarative",
       "version": ">=5.0.0 ~ <6.0.0",
       "options": []
     }
