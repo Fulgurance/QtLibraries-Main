@@ -8,8 +8,7 @@ class Target < ISM::Software
     def configure
         super
 
-        runCmakeCommand(arguments:      "-DQT_FEATURE_system_assimp=OFF \
-                                        -B #{buildDirectoryPath}        \
+        runCmakeCommand(arguments:      "-B #{buildDirectoryPath}   \
                                         -G Ninja",
                         path:           mainWorkDirectoryPath)
     end
