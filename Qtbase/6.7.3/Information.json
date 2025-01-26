@@ -45,8 +45,8 @@
       "kernelDependencies": []
     },
     {
-      "name": "Xcb",
-      "description": "Enable xcb support for X11",
+      "name": "Libxkbcommon",
+      "description": "Enable libxkbcommon support for X11",
       "active": true,
       "dependencies": [
         {
