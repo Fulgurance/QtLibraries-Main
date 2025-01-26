@@ -37,7 +37,7 @@ class Target < ISM::Software
                                         -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
                                         -DFEATURE_system_zlib=ON                                            \
-                                        -DFEATURE_system_pcre2=ON",
+                                        -DFEATURE_system_pcre2=#{option("Pcre2") ? "ON" : "OFF"}",
                         path:           mainWorkDirectoryPath,)
     end
 

@@ -123,6 +123,20 @@
         }
       ],
       "kernelDependencies": []
+    },
+    {
+      "name": "Pcre2",
+      "description": "Enable pcre2 support",
+      "active": true,
+      "dependencies": [
+        {
+          "port": "BaseLibraries-Main",
+          "name": "Pcre2",
+          "version": ">=10.42.0",
+          "options": []
+        }
+      ],
+      "kernelDependencies": []
     }
   ],
   "uniqueDependencies": [],
