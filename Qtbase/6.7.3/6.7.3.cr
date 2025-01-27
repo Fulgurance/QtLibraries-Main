@@ -34,7 +34,8 @@ class Target < ISM::Software
                                         -DFEATURE_system_harfbuzz=#{option("Harfbuzz") ? "ON" : "OFF"}      \
                                         -DFEATURE_sql_sqlite=#{option("Sqlite") ? "ON" : "OFF"}             \
                                         -DFEATURE_system_sqlite=#{option("Sqlite") ? "ON" : "OFF"}          \
-                                        -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}         \
+                                        -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
+                                        -DFEATURE_xkbcommon_x11=#{option("Xcb") ? "ON" : "OFF"}             \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
                                         -DFEATURE_system_zlib=ON                                            \
                                         -DFEATURE_system_pcre2=#{option("Pcre2") ? "ON" : "OFF"}",
