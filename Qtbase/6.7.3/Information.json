@@ -57,6 +57,12 @@
         },
         {
           "port": "XorgBase-Main",
+          "name": "Xcb-Util-Cursor",
+          "version": ">=0.1.4",
+          "options": []
+        },
+        {
+          "port": "XorgBase-Main",
           "name": "Xcb-Util-Image",
           "version": ">=0.4.1",
           "options": []
