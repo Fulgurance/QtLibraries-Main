@@ -36,6 +36,7 @@ class Target < ISM::Software
                                         -DFEATURE_system_sqlite=#{option("Sqlite") ? "ON" : "OFF"}          \
                                         -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
                                         -DQT_FEATURE_xkbcommon_x11=#{option("Xcb") ? "ON" : "OFF"}          \
+                                        -DTEST_xcb_syslibs=#{option("Xcb") ? "TRUE" : "FALSE"}          \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
                                         -DFEATURE_system_zlib=ON                                            \
                                         -DFEATURE_system_pcre2=#{option("Pcre2") ? "ON" : "OFF"}",
