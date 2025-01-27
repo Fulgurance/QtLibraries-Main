@@ -22,6 +22,7 @@ class Target < ISM::Software
                                         -DQT_UNITY_BUILD=ON                                                 \
                                         -DQT_FEATURE_relocatable=OFF                                        \
                                         -DQT_FEATURE_androiddeployqt=OFF                                    \
+                                        -DQT_BUILD_TESTS_BY_DEFAULT=OFF                                     \
                                         -DQT_BUILD_EXAMPLES=OFF                                             \
                                         -DQT_BUILD_DOCS=OFF                                                 \
                                         -DFEATURE_rpath=OFF                                                 \
@@ -36,7 +37,6 @@ class Target < ISM::Software
                                         -DFEATURE_system_sqlite=#{option("Sqlite") ? "ON" : "OFF"}          \
                                         -DFEATURE_xcb=#{option("Xcb") ? "ON" : "OFF"}                       \
                                         -DQT_FEATURE_xkbcommon_x11=#{option("Xcb") ? "ON" : "OFF"}          \
-                                        -DTEST_xcb_syslibs=#{option("Xcb") ? "TRUE" : "FALSE"}          \
                                         -DFEATURE_cups=#{option("Cups") ? "ON" : "OFF"}                     \
                                         -DFEATURE_system_zlib=ON                                            \
                                         -DFEATURE_system_pcre2=#{option("Pcre2") ? "ON" : "OFF"}",
