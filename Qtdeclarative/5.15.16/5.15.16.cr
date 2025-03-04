@@ -40,10 +40,4 @@ class Target < ISM::Software
         end
     end
 
-    def install
-        super
-
-        runLdconfigCommand
-    end
-
 end

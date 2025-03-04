@@ -28,10 +28,4 @@ class Target < ISM::Software
         makeDirectory("#{builtSoftwareDirectoryPath}#{Ism.settings.rootPath}/usr/bin")
     end
 
-    def install
-        super
-
-        runLdconfigCommand
-    end
-
 end
