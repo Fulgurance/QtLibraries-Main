@@ -1,0 +1,6 @@
+{
+  "name": "QtLibraries-Main",
+  "url": "https://github.com/Fulgurance/QtLibraries-Main",
+  "publicKeyUrl": "http://www.slashlinux.io/keyring/Fulgurance.key",
+  "description": "Port that contain all libraries from the Qt project"
+}
