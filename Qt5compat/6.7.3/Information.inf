@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qt5compat
+VERSION
+    6.7.3
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Qt module containing the unsupported Qt 5 APIs
+WEBSITE
+    https://invent.kde.org/qt/qt/qt5compat
+DEPENDENCIES
+        @QtLibraries-Main:Qtdeclarative>=6.0.0 ~ <7.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

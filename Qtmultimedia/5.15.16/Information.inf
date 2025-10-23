@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtmultimedia
+VERSION
+    5.15.16
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Multimedia library for the Qt framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtmultimedia
+DEPENDENCIES
+        @QtLibraries-Main:Qtquick3d>=5.0.0 ~ <6.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

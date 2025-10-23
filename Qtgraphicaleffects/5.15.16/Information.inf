@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtgraphicaleffects
+VERSION
+    5.15.16
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Set of QML types for adding visual effects to user interfaces
+WEBSITE
+    https://invent.kde.org/qt/qt/qtgraphicaleffects
+DEPENDENCIES
+        @QtLibraries-Main:Qtdeclarative>=5.0.0 ~ <6.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

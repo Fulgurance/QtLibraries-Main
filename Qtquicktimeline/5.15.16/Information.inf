@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtquicktimeline
+VERSION
+    5.15.16
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Qt module for keyframe-based timeline construction
+WEBSITE
+    https://invent.kde.org/qt/qt/qtquicktimeline
+DEPENDENCIES
+        @QtLibraries-Main:Qtdeclarative>=5.0.0 ~ <6.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

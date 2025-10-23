@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtscript
+VERSION
+    5.15.16
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Application scripting library for the Qt framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtscript
+DEPENDENCIES
+        @QtLibraries-Main:Qtscript>=5.0.0 ~ <6.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

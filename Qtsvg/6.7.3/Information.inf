@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtsvg
+VERSION
+    6.7.3
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    SVG rendering library for the Qt framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtsvg
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=6.0.0 ~ <7.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

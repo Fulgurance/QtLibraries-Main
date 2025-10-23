@@ -1,0 +1,20 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtquick3d
+VERSION
+    6.7.3
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Qt module and API for defining 3D content in Qt QuickTools
+WEBSITE
+    https://invent.kde.org/qt/qt/qtquick3d
+DEPENDENCIES
+        @QtLibraries-Main:Qtquicktimeline>=6.0.0 ~ <7.0.0
+        @GraphicsLibraries-Main:Assimp>=5.4.3
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

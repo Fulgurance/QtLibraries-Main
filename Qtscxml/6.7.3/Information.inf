@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtscxml
+VERSION
+    6.7.3
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    State Chart XML (SCXML) support library for the Qt framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtscxml
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=6.0.0 ~ <7.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES
