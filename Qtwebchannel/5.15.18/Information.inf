@@ -1,15 +1,15 @@
 PORT
     QtLibraries-Main
 NAME
-    Qtwebsockets
+    Qtwebchannel
 VERSION
-    5.15.16
+    5.15.18
 ARCHITECTURES
     x86_64
 DESCRIPTION
-    Implementation of the WebSocket protocol for the Qt framework
+    Qt WebChannel for the Qt framework
 WEBSITE
-    https://invent.kde.org/qt/qt/qtwebsockets
+    https://invent.kde.org/qt/qt/qtwebchannel
 DEPENDENCIES
         @QtLibraries-Main:Qtdeclarative>=5.0.0 ~ <6.0.0
 KERNELDEPENDENCIES

@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtshadertools
+VERSION
+    6.10.0
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Qt APIs and Tools for Graphics Pipelines
+WEBSITE
+    https://invent.kde.org/qt/qt/qtshadertools
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=6.0.0 ~ <7.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

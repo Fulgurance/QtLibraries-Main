@@ -1,0 +1,44 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qttools
+VERSION
+    6.10.0
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Qt Tools Collection
+WEBSITE
+    https://invent.kde.org/qt/qt/qttools
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=6.0.0 ~ <7.0.0
+        @ProgrammingLanguages-Main:Llvm>=18.1.8(Clang)
+KERNELDEPENDENCIES
+OPTIONS
+    name: Assistant
+    description: Enable assistant support
+    active: false
+    dependencies:
+    kernelDependencies:
+
+    name: Designer
+    description: Enable designer support
+    active: false
+    dependencies:
+    kernelDependencies:
+
+    name: Linguist
+    description: Enable linguist support
+    active: false
+    dependencies:
+    kernelDependencies:
+
+    name: Qdbusviewer
+    description: Enable assistant support
+    active: false
+    dependencies:
+    kernelDependencies:
+
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

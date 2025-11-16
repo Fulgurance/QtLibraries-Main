@@ -1,17 +1,18 @@
 PORT
     QtLibraries-Main
 NAME
-    Qtwebsockets
+    Qtsensors
 VERSION
-    5.15.16
+    5.15.18
 ARCHITECTURES
     x86_64
 DESCRIPTION
-    Implementation of the WebSocket protocol for the Qt framework
+    Hardware sensor access library for the Qt framework
 WEBSITE
-    https://invent.kde.org/qt/qt/qtwebsockets
+    https://invent.kde.org/qt/qt/qtsensors
 DEPENDENCIES
         @QtLibraries-Main:Qtdeclarative>=5.0.0 ~ <6.0.0
+        @QtLibraries-Main:Qtsvg>=5.0.0 ~ <6.0.0
 KERNELDEPENDENCIES
 OPTIONS
 UNIQUEDEPENDENCIES

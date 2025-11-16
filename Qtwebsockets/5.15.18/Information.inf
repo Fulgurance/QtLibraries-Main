@@ -3,7 +3,7 @@ PORT
 NAME
     Qtwebsockets
 VERSION
-    5.15.16
+    5.15.18
 ARCHITECTURES
     x86_64
 DESCRIPTION

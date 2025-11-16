@@ -3,7 +3,7 @@ PORT
 NAME
     Qtwebsockets
 VERSION
-    5.15.16
+    6.10.0
 ARCHITECTURES
     x86_64
 DESCRIPTION
@@ -11,7 +11,7 @@ DESCRIPTION
 WEBSITE
     https://invent.kde.org/qt/qt/qtwebsockets
 DEPENDENCIES
-        @QtLibraries-Main:Qtdeclarative>=5.0.0 ~ <6.0.0
+        @QtLibraries-Main:Qtdeclarative>=6.0.0 ~ <7.0.0
 KERNELDEPENDENCIES
 OPTIONS
 UNIQUEDEPENDENCIES

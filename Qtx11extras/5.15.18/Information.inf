@@ -1,0 +1,19 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtx11extras
+VERSION
+    5.15.18
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Linux/X11-specific support library for the Qt framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtx11extras
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=5.0.0 ~ <6.0.0
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

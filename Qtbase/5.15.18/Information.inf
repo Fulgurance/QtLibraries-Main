@@ -1,0 +1,65 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtbase
+VERSION
+    5.15.18
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Cross-platform application development framework
+WEBSITE
+    https://invent.kde.org/qt/qt/qtbase
+DEPENDENCIES
+        @GraphicsLibraries-Main:Mesa>=23.1.6
+KERNELDEPENDENCIES
+OPTIONS
+    name: Harfbuzz
+    description: Enable harfbuzz support
+    active: true
+    dependencies:
+        @GraphicsLibraries-Main:Harfbuzz>=8.1.1
+    kernelDependencies:
+
+    name: Sqlite
+    description: Enable sqlite support
+    active: true
+    dependencies:
+        @DatabaseLibraries-Main:Sqlite>=3.42.0
+    kernelDependencies:
+
+    name: Xcb
+    description: Enable xcb support for X11
+    active: true
+    dependencies:
+        @XorgBase-Main:Libxkbcommon>=1.5.0(Libxcb)
+        @XorgBase-Main:Xcb-Util-Image>=0.4.1
+        @XorgBase-Main:Xcb-Util-Keysyms>=0.4.1
+        @XorgBase-Main:Xcb-Util-Renderutil>=0.3.10
+        @XorgBase-Main:Xcb-Util-Wm>=0.4.2
+    kernelDependencies:
+
+    name: Dbus
+    description: Enable dbus support
+    active: true
+    dependencies:
+        @Utilities-Main:Dbus>=1.14.8
+    kernelDependencies:
+
+    name: Openssl
+    description: Enable openssl support
+    active: true
+    dependencies:
+        @SecuritySoftwares-Main:Openssl>=3.1.2
+    kernelDependencies:
+
+    name: Cups
+    description: Enable cups support
+    active: false
+    dependencies:
+        @Utilities-Main:Cups>=2.4.6
+    kernelDependencies:
+
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES

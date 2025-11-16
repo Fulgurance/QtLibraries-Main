@@ -1,0 +1,21 @@
+PORT
+    QtLibraries-Main
+NAME
+    Qtwebengine
+VERSION
+    6.10.0
+ARCHITECTURES
+    x86_64
+DESCRIPTION
+    Library for rendering dynamic web content in Qt C++ and QML applications
+WEBSITE
+    https://invent.kde.org/qt/qt/qtwebengine
+DEPENDENCIES
+        @QtLibraries-Main:Qtbase>=6.0.0 ~ <7.0.0
+        @BaseLibraries-Main:Html5lib>=1.1.0
+        @Utilities-Main:Cups>=2.4.6
+KERNELDEPENDENCIES
+OPTIONS
+UNIQUEDEPENDENCIES
+UNIQUEOPTIONS
+ALLOWCODEPENDENCIES
